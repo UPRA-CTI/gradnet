@@ -6,6 +6,7 @@ use kartik\widgets\ActiveForm;
 /* @var $this yii\web\View */
 /* @var $model app\models\Documento */
 /* @var $form yii\widgets\ActiveForm */
+print_r($model->errors);
 ?>
 
 <div class="user-form">

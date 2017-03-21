@@ -21,7 +21,8 @@ class AppAsset extends AssetBundle
         'css/pace-theme-flash.min.css',
         'css/animate.min.css',
         'css/jquery.scrollbar.css',
-        'css/webarch.css'
+        'css/webarch.css',
+        'css/site.css',
     ];
     public $js = [
         'js/pace.min.js',

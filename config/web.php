@@ -3,9 +3,9 @@
 $params = require(__DIR__ . '/params.php');
 
 if (!YII_ENV_DEV) {
-    $config = parse_ini_file(dirname(dirname(__DIR__)). '/gradnet-config.ini', true);
+    $config = parse_ini_file(dirname(__DIR__). '/gradnet-config.ini', true);
 } else {
-    $config = parse_ini_file(dirname(dirname(__DIR__)). '/gradnet-config.ini', true);
+    $config = parse_ini_file(dirname(__DIR__). '/gradnet-config.ini', true);
 }
 
 $config = [
@@ -21,7 +21,10 @@ $config = [
             'class' => 'yii\caching\FileCache',
         ],
         'user' => [
-            'identityClass' => 'app\models\User',
+            'class' => 'dektrium\user\Module',
+            'enableUnconfirmedLogin' => true,
+            'confirmWithin' => 21600,
+            'cost' => 12,
             'enableAutoLogin' => true,
         ],
         'errorHandler' => [

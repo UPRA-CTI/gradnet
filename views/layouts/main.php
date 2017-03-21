@@ -3,6 +3,7 @@
 /* @var $this \yii\web\View */
 /* @var $content string */
 
+use yii\helpers\Url;
 use yii\helpers\Html;
 use yii\bootstrap\Nav;
 use yii\bootstrap\NavBar;
@@ -37,18 +38,16 @@ AppAsset::register($this);
            </li>
          </ul>
          <!-- BEGIN LOGO -->
-         <a href="index.html">
-           <img src="assets/img/logo.png" class="logo" alt="" data-src="assets/img/logo.png" data-src-retina="assets/img/logo2x.png" width="106" height="21" />
-         </a>
+         <span style="font-size: 1.5em; color: #fff; padding: 0.9em 0.5em; margin-top: 12px;">UPR GradNet <i class="glyphicon  glyphicon-education"></i></span>
          <!-- END LOGO -->
          <ul class="nav pull-right notifcation-center">
            <li class="dropdown hidden-xs hidden-sm">
-             <a href="index.html" class="dropdown-toggle active" data-toggle="">
+             <a href="<?= Url::to(['/site']) ?>" class="dropdown-toggle active" data-toggle="">
                <i class="material-icons">home</i>
              </a>
            </li>
            <li class="dropdown hidden-xs hidden-sm">
-             <a href="email.html" class="dropdown-toggle">
+             <a href="javascript::void(0)" class="dropdown-toggle">
                <i class="material-icons">email</i><span class="badge bubble-only"></span>
              </a>
            </li>
@@ -68,29 +67,6 @@ AppAsset::register($this);
                <a href="#" class="" id="layout-condensed-toggle">
                  <i class="material-icons">menu</i>
                </a>
-             </li>
-           </ul>
-           <ul class="nav quick-section">
-             <li class="quicklinks  m-r-10">
-               <a href="#" class="">
-                 <i class="material-icons">refresh</i>
-               </a>
-             </li>
-             <li class="quicklinks">
-               <a href="#" class="">
-                 <i class="material-icons">apps</i>
-               </a>
-             </li>
-             <li class="quicklinks"> <span class="h-seperate"></span></li>
-             <li class="quicklinks">
-               <a href="#" class="" id="my-task-list" data-placement="bottom" data-content='' data-toggle="dropdown" data-original-title="Notifications">
-                 <i class="material-icons">notifications_none</i>
-                 <span class="badge badge-important bubble-only"></span>
-               </a>
-             </li>
-             <li class="m-r-10 input-prepend inside search-form no-boarder">
-               <span class="add-on"> <i class="material-icons">search</i></span>
-               <input name="" type="text" class="no-boarder " placeholder="Search Dashboard" style="width:250px;">
              </li>
            </ul>
          </div>
@@ -118,12 +94,6 @@ AppAsset::register($this);
          <!-- END TOP NAVIGATION MENU -->
          <!-- BEGIN CHAT TOGGLER -->
          <div class="pull-right">
-           <div class="chat-toggler sm">
-             <div class="profile-pic">
-               <img src="assets/img/profiles/avatar_small.jpg" alt="" data-src="assets/img/profiles/avatar_small.jpg" data-src-retina="assets/img/profiles/avatar_small2x.jpg" width="35" height="35" />
-               <div class="availability-bubble online"></div>
-             </div>
-           </div>
            <ul class="nav quick-section ">
              <li class="quicklinks">
                <a data-toggle="dropdown" class="dropdown-toggle  pull-right " href="#" id="user-options">
@@ -131,23 +101,15 @@ AppAsset::register($this);
                </a>
                <ul class="dropdown-menu  pull-right" role="menu" aria-labelledby="user-options">
                  <li>
-                   <a href="user-profile.html"> My Account</a>
-                 </li>
-                 <li>
-                   <a href="calender.html">My Calendar</a>
-                 </li>
-                 <li>
-                   <a href="email.html"> My Inbox&nbsp;&nbsp;
-                     <span class="badge badge-important animated bounceIn">2</span>
-                   </a>
+                   <a href="<?= Url::to(['/user/settings/profile']) ?>"> My Account</a>
                  </li>
                  <li class="divider"></li>
                  <li>
-                   <a href="login.html"><i class="material-icons">power_settings_new</i>&nbsp;&nbsp;Log Out</a>
+                   <a href="<?= Url::to(['/site/logout']) ?>"><i class="material-icons">power_settings_new</i>&nbsp;&nbsp;Cerrar Sesión</a>
                  </li>
                </ul>
              </li>
-             <li class="quicklinks"> <span class="h-seperate"></span></li>
+             <!-- <li class="quicklinks"> <span class="h-seperate"></span></li>
              <li class="quicklinks">
                <a href="#" class="chat-menu-toggle" data-webarch="toggle-right-side"><i class="material-icons">chat</i><span class="badge badge-important hide">1</span>
                </a>
@@ -160,7 +122,7 @@ AppAsset::register($this);
                    </div>
                  </div>
                </div>
-             </li>
+             </li> -->
            </ul>
          </div>
          <!-- END CHAT TOGGLER -->
@@ -177,26 +139,23 @@ AppAsset::register($this);
        <!-- BEGIN MINI-PROFILE -->
        <div class="page-sidebar-wrapper scrollbar-dynamic" id="main-menu-wrapper">
          <div class="user-info-wrapper sm">
-           <div class="profile-wrapper sm">
-             <img src="assets/img/profiles/avatar.jpg" alt="" data-src="assets/img/profiles/avatar.jpg" data-src-retina="assets/img/profiles/avatar2x.jpg" width="69" height="69" />
-             <div class="availability-bubble online"></div>
-           </div>
-           <div class="user-info sm">
-             <div class="username">Fred <span class="semi-bold">Smith</span></div>
-             <div class="status">Life goes on...</div>
-           </div>
+          <?php if (!Yii::$app->user->isGuest): ?>
+             <div class="user-info sm">
+               <div class="username">Fred <span class="semi-bold">Smith</span></div>
+               <div class="status">Life goes on...</div>
+             </div>
+          <?php endif; ?>
          </div>
          <!-- END MINI-PROFILE -->
          <!-- BEGIN SIDEBAR MENU -->
-         <p class="menu-title sm">BROWSE <span class="pull-right"><a href="javascript:;"><i class="material-icons">refresh</i></a></span></p>
          <ul>
-           <li class="start active "> <a href="#"><i class="material-icons">home</i> <span class="title">Link</span> <span class="selected"></span> </a>
+           <li class="start active "> <a href="#"><i class="material-icons">home</i> <span class="title">Mi Perfil</span> <span class="selected"></span> </a>
            </li>
            <li class="">
-             <a href="#"> <i class="material-icons">email</i> <span class="title">Link</span> <span class=" badge badge-disable pull-right ">203</span>
+             <a href="#"> <i class="material-icons">people outline</i> <span class="title">Directorio</span> <span class=" badge badge-disable pull-right ">203</span>
              </a>
            </li>
-           <li class="">
+           <!-- <li class="">
              <a href="javascript:;"> <i class="material-icons">more_horiz</i> <span class="title">Link</span> <span class=" arrow"></span> </a>
              <ul class="sub-menu">
                <li> <a href="javascript:;"> Level 1 </a> </li>
@@ -208,8 +167,8 @@ AppAsset::register($this);
                  </ul>
                </li>
              </ul>
-           </li>
-           <li class="hidden-lg hidden-md hidden-xs" id="more-widgets">
+           </li> -->
+           <!-- <li class="hidden-lg hidden-md hidden-xs" id="more-widgets">
              <a href="javascript:;"> <i class="material-icons"></i></a>
              <ul class="sub-menu">
                <li class="side-bar-widgets">
@@ -230,37 +189,15 @@ AppAsset::register($this);
                  </div>
                </li>
              </ul>
-           </li>
+           </li> -->
          </ul>
-         <div class="side-bar-widgets">
-           <p class="menu-title sm">FOLDER <span class="pull-right"><a href="#" class="create-folder"> <i class="material-icons">add</i></a></span></p>
-           <ul class="folders">
-             <li>
-               <a href="#">
-                 <div class="status-icon green"></div>
-                 My quick tasks </a>
-             </li>
-           </ul>
-           <p class="menu-title">PROJECTS </p>
-           <div class="status-widget">
-             <div class="status-widget-wrapper">
-               <div class="title">Freelancer<a href="#" class="remove-widget"><i class="material-icons">close</i></a></div>
-               <p>Redesign home page</p>
-             </div>
-           </div>
-         </div>
          <div class="clearfix"></div>
          <!-- END SIDEBAR MENU -->
        </div>
      </div>
      <a href="#" class="scrollup">Scroll</a>
      <div class="footer-widget">
-       <div class="progress transparent progress-small no-radius no-margin">
-         <div class="progress-bar progress-bar-success animate-progress-bar" data-percentage="79%" style="width: 79%;"></div>
-       </div>
-       <div class="pull-right">
-         <div class="details-status"> <span class="animate-number" data-value="86" data-animation-duration="560">86</span>% </div>
-         <a href="lockscreen.html"><i class="material-icons">power_settings_new</i></a></div>
+        <p style="color: #fff;">GradNet <?= date("Y") ?></p>
      </div>
      <!-- END SIDEBAR -->
      <!-- BEGIN PAGE CONTAINER-->

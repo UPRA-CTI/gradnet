@@ -1,8 +1,8 @@
 <?php
 if (!YII_ENV_DEV) {
-    $config = parse_ini_file(dirname(dirname(__DIR__)). '/gradnet-config.ini', true);
+    $config = parse_ini_file(dirname(__DIR__). '/gradnet-config.ini', true);
 } else {
-    $config = parse_ini_file(dirname(dirname(__DIR__)). '/gradnet-config.ini', true);
+    $config = parse_ini_file(dirname(__DIR__). '/gradnet-config.ini', true);
 }
 
 return [
