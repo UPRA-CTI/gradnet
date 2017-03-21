@@ -2,6 +2,12 @@
 
 $params = require(__DIR__ . '/params.php');
 
+if (!YII_ENV_DEV) {
+    $config = parse_ini_file(dirname(dirname(__DIR__)). '/gradnet-config.ini', true);
+} else {
+    $config = parse_ini_file(dirname(dirname(__DIR__)). '/gradnet-config.ini', true);
+}
+
 $config = [
     'id' => 'basic',
     'basePath' => dirname(__DIR__),
@@ -38,14 +44,20 @@ $config = [
             ],
         ],
         'db' => require(__DIR__ . '/db.php'),
-        /*
         'urlManager' => [
             'enablePrettyUrl' => true,
             'showScriptName' => false,
             'rules' => [
             ],
         ],
-        */
+        'authClientCollection' => require(__DIR__ . '/auth.php'),
+        'view' => [
+        'theme' => [
+            'pathMap' => [
+                '@dektrium/user/views' => '@app/views/user'
+            ],
+        ],
+    ],
     ],
     'params' => $params,
 ];
