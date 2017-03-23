@@ -1,6 +1,6 @@
 /*
-SQLyog Community v12.4.0 (32 bit)
-MySQL - 10.1.10-MariaDB : Database - gradnet_v1
+SQLyog Community v12.3.1 (64 bit)
+MySQL - 10.1.16-MariaDB : Database - gradnet_v1
 *********************************************************************
 */
 
@@ -12,7 +12,7 @@ MySQL - 10.1.10-MariaDB : Database - gradnet_v1
 /*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
 /*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
-CREATE DATABASE /*!32312 IF NOT EXISTS*/`gradnet_v1` /*!40100 DEFAULT CHARACTER SET latin1 */;
+CREATE DATABASE /*!32312 IF NOT EXISTS*/`gradnet_v1` /*!40100 DEFAULT CHARACTER SET utf8 */;
 
 USE `gradnet_v1`;
 
@@ -32,6 +32,9 @@ CREATE TABLE `auth` (
 
 /*Data for the table `auth` */
 
+insert  into `auth`(`id`,`user_id`,`source`,`source_id`) values 
+(1,1,'linkedin','NPiD1pEguJ');
+
 /*Table structure for table `bachelors_degree` */
 
 DROP TABLE IF EXISTS `bachelors_degree`;
@@ -43,24 +46,9 @@ CREATE TABLE `bachelors_degree` (
   PRIMARY KEY (`id`),
   KEY `dept_bachillerato` (`dept_id`),
   CONSTRAINT `dept_bachillerato` FOREIGN KEY (`dept_id`) REFERENCES `department` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 /*Data for the table `bachelors_degree` */
-
-/*Table structure for table `certification` */
-
-DROP TABLE IF EXISTS `certification`;
-
-CREATE TABLE `certification` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `department_id` int(11) DEFAULT NULL,
-  `name_certification` varchar(128) DEFAULT NULL,
-  PRIMARY KEY (`id`),
-  KEY `dept_cert` (`department_id`),
-  CONSTRAINT `dept_cert` FOREIGN KEY (`department_id`) REFERENCES `department` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
-
-/*Data for the table `certification` */
 
 /*Table structure for table `department` */
 
@@ -72,9 +60,28 @@ CREATE TABLE `department` (
   `description` varchar(128) DEFAULT NULL,
   `active` int(1) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 /*Data for the table `department` */
+
+/*Table structure for table `experience_category` */
+
+DROP TABLE IF EXISTS `experience_category`;
+
+CREATE TABLE `experience_category` (
+  `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Id',
+  `name` varchar(128) DEFAULT NULL COMMENT 'Nombre',
+  `description` varchar(255) DEFAULT NULL COMMENT 'Descripción',
+  `is_active` int(1) DEFAULT '1' COMMENT 'Activo?',
+  `created_at` int(11) DEFAULT NULL COMMENT 'Fecha Creado',
+  `updated_at` int(11) DEFAULT NULL COMMENT 'Fecha Actualizado',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+
+/*Data for the table `experience_category` */
+
+insert  into `experience_category`(`id`,`name`,`description`,`is_active`,`created_at`,`updated_at`) values 
+(1,'Bachillerato',NULL,1,NULL,NULL);
 
 /*Table structure for table `grad_addresses` */
 
@@ -127,10 +134,72 @@ CREATE TABLE `grad_events_stream` (
   `body` mediumtext,
   `created_at` int(11) DEFAULT NULL,
   `updated_at` int(11) DEFAULT NULL,
-  PRIMARY KEY (`id`)
+  PRIMARY KEY (`id`),
+  KEY `user_id` (`user_id`),
+  CONSTRAINT `grad_events_stream_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `profile` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 /*Data for the table `grad_events_stream` */
+
+/*Table structure for table `grad_experience` */
+
+DROP TABLE IF EXISTS `grad_experience`;
+
+CREATE TABLE `grad_experience` (
+  `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Id',
+  `user_id` int(11) DEFAULT NULL,
+  `location_id` int(11) DEFAULT NULL COMMENT 'Lugar',
+  `category_id` int(11) DEFAULT NULL COMMENT 'Tipo de Experiencia',
+  `title` varchar(255) DEFAULT NULL COMMENT 'Título',
+  `sub_title` varchar(255) DEFAULT NULL COMMENT 'Nombre',
+  `description` mediumtext COMMENT 'Descripción',
+  `date_from` int(11) DEFAULT NULL COMMENT 'Fecha de Comienzo',
+  `date_to` int(11) DEFAULT NULL COMMENT 'Fecha de Final',
+  `is_active` int(1) DEFAULT '1' COMMENT 'Activo?',
+  `updated_at` int(11) DEFAULT NULL COMMENT 'Fecha Actualizado',
+  `created_at` int(11) DEFAULT NULL COMMENT 'Fecha Creado',
+  PRIMARY KEY (`id`),
+  KEY `location_id` (`location_id`),
+  KEY `grad_experience_ibfk_3` (`category_id`),
+  KEY `grad_experience_ibfk_1` (`user_id`),
+  CONSTRAINT `grad_experience_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `profile` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `grad_experience_ibfk_2` FOREIGN KEY (`location_id`) REFERENCES `grad_locations` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `grad_experience_ibfk_3` FOREIGN KEY (`category_id`) REFERENCES `experience_category` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+
+/*Data for the table `grad_experience` */
+
+insert  into `grad_experience`(`id`,`user_id`,`location_id`,`category_id`,`title`,`sub_title`,`description`,`date_from`,`date_to`,`is_active`,`updated_at`,`created_at`) values 
+(1,2,1,1,'Bachillerato','Ciencias de Cómputos','Ciencias de Cómputos',NULL,NULL,1,NULL,NULL);
+
+/*Table structure for table `grad_locations` */
+
+DROP TABLE IF EXISTS `grad_locations`;
+
+CREATE TABLE `grad_locations` (
+  `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Id',
+  `name` varchar(255) DEFAULT NULL COMMENT 'Nombre',
+  `description` mediumtext COMMENT 'Descripción',
+  `address` varchar(255) DEFAULT NULL COMMENT 'Dirección Postal',
+  `address2` varchar(255) DEFAULT NULL COMMENT 'Dirección Física',
+  `state` varchar(255) DEFAULT NULL COMMENT 'Estado',
+  `state_id` int(11) DEFAULT NULL COMMENT 'Estado',
+  `city` varchar(255) DEFAULT NULL COMMENT 'Ciudad',
+  `zipcode` int(11) DEFAULT NULL COMMENT 'Código Postal',
+  `type_id` int(11) DEFAULT NULL COMMENT 'Tipo de Localización, Compañía',
+  `phone1` varchar(128) DEFAULT NULL COMMENT 'Teléfono #1',
+  `phone2` varchar(128) DEFAULT NULL COMMENT 'Teléfono #2',
+  `contact_email` varchar(128) DEFAULT NULL COMMENT 'Correo Electrónico',
+  `contact_email2` varchar(128) DEFAULT NULL COMMENT 'Correo Electrónico #2',
+  `created_at` int(11) DEFAULT NULL COMMENT 'Fecha Creado',
+  `updated_at` int(11) DEFAULT NULL COMMENT 'Fecha Actualizado',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+
+/*Data for the table `grad_locations` */
+
+insert  into `grad_locations`(`id`,`name`,`description`,`address`,`address2`,`state`,`state_id`,`city`,`zipcode`,`type_id`,`phone1`,`phone2`,`contact_email`,`contact_email2`,`created_at`,`updated_at`) values 
+(1,'UPR Arecibo',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL);
 
 /*Table structure for table `grad_mayor` */
 
@@ -148,7 +217,7 @@ CREATE TABLE `grad_mayor` (
   PRIMARY KEY (`id`),
   KEY `user_id` (`user_id`),
   KEY `dept_id` (`dept_id`),
-  CONSTRAINT `grad_mayor_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `grad_users` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `grad_mayor_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `profile` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `grad_mayor_ibfk_2` FOREIGN KEY (`dept_id`) REFERENCES `department` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
@@ -175,9 +244,12 @@ CREATE TABLE `grad_users` (
   `github` varchar(128) DEFAULT NULL,
   `username` varchar(128) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
 
 /*Data for the table `grad_users` */
+
+insert  into `grad_users`(`id`,`student_id`,`email`,`first_name`,`initial`,`last_name`,`second_last_name`,`password_hash`,`status`,`created_at`,`updated_at`,`auth_key`,`password_reset_token`,`github`,`username`) values 
+(1,NULL,'sales@eolpr.com',NULL,NULL,NULL,NULL,'$2y$13$Xso/8gRpBdEzk04ns6YalOdrenkh7WmbuqGQq83CHDfF.t50bmth.',10,NULL,NULL,'AHHK1l2nKhu8Ek_UUMmgpy0gtqHXlldE','lqgmqSOvP0HPu3RB9AKR_WhHgX2h8OTQ_1490281035',NULL,NULL);
 
 /*Table structure for table `migration` */
 
@@ -205,7 +277,8 @@ insert  into `migration`(`version`,`apply_time`) values
 DROP TABLE IF EXISTS `profile`;
 
 CREATE TABLE `profile` (
-  `user_id` int(11) NOT NULL,
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `user_id` int(11) DEFAULT NULL,
   `name` varchar(255) DEFAULT NULL,
   `public_email` varchar(255) DEFAULT NULL,
   `gravatar_email` varchar(255) DEFAULT NULL,
@@ -213,14 +286,30 @@ CREATE TABLE `profile` (
   `location` varchar(255) DEFAULT NULL,
   `website` varchar(255) DEFAULT NULL,
   `bio` text,
-  PRIMARY KEY (`user_id`),
-  CONSTRAINT `fk_user_profile` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`) ON DELETE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
 
 /*Data for the table `profile` */
 
-insert  into `profile`(`user_id`,`name`,`public_email`,`gravatar_email`,`gravatar_id`,`location`,`website`,`bio`) values 
-(1,NULL,NULL,'roberto.rosa2@upr.edu','789a98f4d3b252610a21cecfd18c42a4',NULL,NULL,NULL);
+insert  into `profile`(`id`,`user_id`,`name`,`public_email`,`gravatar_email`,`gravatar_id`,`location`,`website`,`bio`) values 
+(1,1,NULL,NULL,'roberto.rosa2@upr.edu','789a98f4d3b252610a21cecfd18c42a4',NULL,NULL,NULL),
+(2,1,'Roberto Rosa','admin@eolpr.com','','','Camuy','robert.me','Unfinished');
+
+/*Table structure for table `skills` */
+
+DROP TABLE IF EXISTS `skills`;
+
+CREATE TABLE `skills` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `skill_name` varchar(128) DEFAULT NULL,
+  `active` int(1) unsigned NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
+
+/*Data for the table `skills` */
+
+insert  into `skills`(`id`,`skill_name`,`active`) values 
+(1,'web design',1);
 
 /*Table structure for table `social_account` */
 
@@ -235,7 +324,7 @@ CREATE TABLE `social_account` (
   PRIMARY KEY (`id`),
   UNIQUE KEY `account_unique` (`provider`,`client_id`),
   KEY `fk_user_account` (`user_id`),
-  CONSTRAINT `fk_user_account` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`) ON DELETE CASCADE
+  CONSTRAINT `social_account_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `profile` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 /*Data for the table `social_account` */
