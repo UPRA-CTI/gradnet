@@ -9,6 +9,7 @@ use yii\bootstrap\Nav;
 use yii\bootstrap\NavBar;
 use yii\widgets\Breadcrumbs;
 use app\assets\AppAsset;
+use yii\bootstrap\Modal;
 
 AppAsset::register($this);
 ?>
@@ -23,6 +24,22 @@ AppAsset::register($this);
     <title><?= Html::encode($this->title) ?></title>
     <?php $this->head() ?>
 </head>
+
+ <?php
+        Modal::begin([
+            'header' => '<h4>Editando Mis Datos</h4>',
+            'id' => 'modal',
+            'size' => 'modal-lg',
+            // keeps from closing modal with esc key or by clicking out of the modal screen.
+            // The user must click cancel or 'x' to close the modal.
+            'clientOptions' => ['backdrop' => 'static', 'keyboard' => FAlSE]
+        ]);
+
+        echo "<div id = 'modalContent'></div>";
+
+        Modal::end();
+    ?>
+    
 <body>
 <?php $this->beginBody() ?>
 
@@ -149,7 +166,7 @@ AppAsset::register($this);
          <!-- END MINI-PROFILE -->
          <!-- BEGIN SIDEBAR MENU -->
          <ul>
-           <li class="start active "> <a href="#"><i class="material-icons">home</i> <span class="title">Mi Perfil</span> <span class="selected"></span> </a>
+           <li class="start active "> <a href="<?= Url::to(['profile/view', 'id' => 2]) ?>"><i class="material-icons">home</i> <span class="title">Mi Perfil</span> <span class="selected"></span> </a>
            </li>
            <li class="">
              <a href="#"> <i class="material-icons">people outline</i> <span class="title">Directorio</span> <span class=" badge badge-disable pull-right ">203</span>

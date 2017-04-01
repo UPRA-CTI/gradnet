@@ -33,7 +33,8 @@ class AppAsset extends AssetBundle
         'js/jquery.animateNumbers.min.js',
         'js/jquery.validate.min.js',
         'js/select2.min.js',
-        'js/webarch.js'
+        'js/webarch.js',
+        'js/main.js'
     ];
     public $depends = [
         'yii\web\YiiAsset',

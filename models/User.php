@@ -12,7 +12,7 @@ use Yii;
 
 use dektrium\user\models\User as BaseUser;
 
-class User extends BaseUser;
+class User extends BaseUser
 {
     /**
      * @return \yii\db\Connection the database connection used by this AR class.
