@@ -40,10 +40,13 @@ use yii\widgets\Pjax;
 
 <script type="text/javascript">
    $(document).ready(
-       $('#infoForm').on('beforeSubmit', "form#infoForm",funtion() {
+       $('#infoForm').on('beforeSubmit', "form#infoForm", function() {
            var form = $(this);
-           
+
+           alert("INSIDE THE FORM SCRIPT");
+
            if(form.find('.has-error').length) {
+               alert("Error!!!")
                return false; 
            }
            //submit form
@@ -51,14 +54,15 @@ use yii\widgets\Pjax;
                url: form.attr('action'),
                type: 'post',
                data: form.serialize(),
+               timeout: 2000,
                success: function(response) {
-                   
+                   alert("SUCCESS");
                     $("#modal").modal("toggle");
                     $.pjax.reload({container:"#infoDetail"}); //for pjax update
                }
            });
            return false; 
-       }),
+       })
    );
 
 </script>
