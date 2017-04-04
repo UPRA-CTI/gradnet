@@ -35,8 +35,9 @@ class AppAsset extends AssetBundle
         'js/select2.min.js',
         'js/webarch.js',
         'js/main.js',
-        'js/experience.js'
-    ];
+        'js/experience.js',
+        'js/newexperience.js' 
+   ];
     public $depends = [
         'yii\web\YiiAsset',
         'yii\bootstrap\BootstrapAsset',

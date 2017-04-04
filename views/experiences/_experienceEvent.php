@@ -18,5 +18,5 @@ use yii\helpers\Url;
       <?= Html::encode($event->description); ?>
     </p>
   </div>
-  <button type = "button" class="btn-link" value = "/gradnet/web/experiences/update?id=1" id="updatingExperience"> Editar Experiencia </button>
+  <button type = "button" class="btn-link pull-right" value = "/gradnet/web/experiences/update?id=1" id="updatingExperience"> Editar Experiencia </button>
 </div>
