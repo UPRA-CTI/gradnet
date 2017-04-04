@@ -42,9 +42,9 @@ $this->registerAssetBundle(yii\web\JqueryAsset::className(), View::POS_HEAD);
       </p>
       <div id="gn-experience-timeline"></div>
         <!-- Este botón debe ir incluido en cada experiencia que el usuario tenga... -->
-        <p>
+        <!--<p>
             <?= Html::button('Modificar Experiencia',['value' => Url:: to ('/gradnet/web/experiences/update?id=1'),'class' => 'btn btn-primary', 'id' => 'updatingExperience']) ?>
-        </p>
+        </p>-->
     </div>
 </div>
 <script type="text/javascript">

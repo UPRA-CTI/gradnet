@@ -1,6 +1,7 @@
 <?php
 
 use yii\helpers\Html;
+use yii\helpers\Url;
 ?>
 <div class="row">
   <div class="col-sm-2">
@@ -17,4 +18,5 @@ use yii\helpers\Html;
       <?= Html::encode($event->description); ?>
     </p>
   </div>
+  <button type = "button" class="btn-link" value = "/gradnet/web/experiences/update?id=1" id="updatingExperience"> Editar Experiencia </button>
 </div>
