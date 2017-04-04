@@ -27,7 +27,8 @@ AppAsset::register($this);
 
  <?php
         Modal::begin([
-            'header' => '<h4>Editando Mis Datos</h4>',
+            'header' => '<h4>Editando Mis datos </h4>',
+            // 'headerOptions' => ['id' => 'modalHeader',],  // Modifica el título del Modal para el uso que se le quiera dar
             'id' => 'modal',
             'size' => 'modal-lg',
             // keeps from closing modal with esc key or by clicking out of the modal screen.

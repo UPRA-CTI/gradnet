@@ -57,7 +57,7 @@ class ExperiencesController extends Controller
             ]);
         }
 
-        return $this->render('view', [
+        return $this->renderAjax('view', [
             'experiences' => $this->findExperiences($id),
         ]);
     }
@@ -91,9 +91,9 @@ class ExperiencesController extends Controller
         $model = $this->findModel($id);
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
+            return $this->redirect(['profile/view', 'id' => $model->id]);
         } else {
-            return $this->render('update', [
+            return $this->renderAjax('update', [
                 'model' => $model,
             ]);
         }

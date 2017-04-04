@@ -30,39 +30,9 @@ use yii\widgets\Pjax;
             <?= $form->field($model, 'bio')->textarea(['rows' => 6]) ?>
 
             <div class="form-group">
-                <?= Html::submitButton($model->isNewRecord ? 'Create' : 'Update', ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
-                
+                <?= Html::submitButton($model->isNewRecord ? 'Create' : 'Update',['update', 'id' => 'updateUser'], ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
             </div>
 
     <?php ActiveForm::end(); ?> 
     <?php Pjax::end()?> 
 </div>
-
-<script type="text/javascript">
-   $(document).ready(
-       $('#infoForm').on('beforeSubmit', "form#infoForm", function() {
-           var form = $(this);
-
-           alert("INSIDE THE FORM SCRIPT");
-
-           if(form.find('.has-error').length) {
-               alert("Error!!!")
-               return false; 
-           }
-           //submit form
-           $.ajax({
-               url: form.attr('action'),
-               type: 'post',
-               data: form.serialize(),
-               timeout: 2000,
-               success: function(response) {
-                   alert("SUCCESS");
-                    $("#modal").modal("toggle");
-                    $.pjax.reload({container:"#infoDetail"}); //for pjax update
-               }
-           });
-           return false; 
-       })
-   );
-
-</script>

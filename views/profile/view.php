@@ -11,19 +11,18 @@ use yii\widgets\DetailView;
 
 use yii\web\View;
 $this->title = $model->name;
-$this->params['breadcrumbs'][] = ['label' => 'Profiles', 'url' => ['index']];
-$this->params['breadcrumbs'][] = $this->title;
+// $this->params['breadcrumbs'][] = ['label' => 'Profiles', 'url' => ['index']];
+// $this->params['breadcrumbs'][] = $this->title;
 $this->registerAssetBundle(yii\web\JqueryAsset::className(), View::POS_HEAD);
 ?>
 <div class="profile-view">
 
-    <h1><?= Html::encode($this->title) ?></h1>
+    <h1> <?= Html::encode($this->title) ?> </h1>
 
     <p>
-        <?= Html::button('Actualizar Perfil',['value' => Url:: to ('/gradnet/web/profile/update?id=2'),'class' => 'btn btn-primary', 'id' => 'updatingData']) ?>
+        <?= Html::button('Actualizar Mi Perfil',['value' => Url:: to ('/gradnet/web/profile/update?id=1'),'class' => 'btn btn-primary', 'id' => 'updatingData']) ?>
     </p> 
-
-  <?php Pjax::begin(['id'=>'infoDetail']); ?> 
+ <div class="content" id="infoDetail">
             <?= DetailView::widget([
                 'model' => $model,
                 'attributes' => [
@@ -35,11 +34,17 @@ $this->registerAssetBundle(yii\web\JqueryAsset::className(), View::POS_HEAD);
                     'website',
                     'bio:ntext',
                  ]]) ?>
-    <?php Pjax::end(); ?>
-
+    </div>
 
     <div class="row">
+      <p>
+        <?= Html::button('<i class="material-icons">note_add</i> Agregar Experiencia',['value' => Url:: to ('/gradnet/web/experiences/create'),'class' => 'btn btn-primary', 'id' => 'createExperience']) ?>
+      </p>
       <div id="gn-experience-timeline"></div>
+        <!-- Este botón debe ir incluido en cada experiencia que el usuario tenga... -->
+        <p>
+            <?= Html::button('Modificar Experiencia',['value' => Url:: to ('/gradnet/web/experiences/update?id=1'),'class' => 'btn btn-primary', 'id' => 'updatingExperience']) ?>
+        </p>
     </div>
 </div>
 <script type="text/javascript">

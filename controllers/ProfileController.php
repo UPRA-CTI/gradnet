@@ -84,9 +84,8 @@ class ProfileController extends Controller
     {
         $model = $this->findModel($id);
 
-        if ($model->load(Yii::$app->request->post()) && Yii::$app->request->isAjax) {
-            Yii::$app->response->format = Response::FORMAT_JSON;
-            return ActiveForm::validate($model);
+        if ($model->load(Yii::$app->request->post()) && $model->save()) {
+           return $this->redirect(['view', 'id' => $model->id]);
         } else {
             return $this->renderAjax('update', [
                 'model' => $model,

@@ -34,7 +34,8 @@ class AppAsset extends AssetBundle
         'js/jquery.validate.min.js',
         'js/select2.min.js',
         'js/webarch.js',
-        'js/main.js'
+        'js/main.js',
+        'js/experience.js'
     ];
     public $depends = [
         'yii\web\YiiAsset',
