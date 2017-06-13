@@ -3,6 +3,7 @@
 namespace app\controllers;
 
 use Yii;
+use yii\filters\AccessControl;
 use app\models\Experience;
 use app\models\ExperienceSearch;
 use yii\web\Controller;
@@ -20,32 +21,29 @@ class ExperiencesController extends Controller
     public function behaviors()
     {
         return [
+            'access' => [
+                'class' => AccessControl::className(),
+                'only' => [
+                   'index'
+                ],
+                'rules' => [
+                    [
+                        'actions' => ['index','view','create','delete'],
+                        'allow' => true,
+                        'roles' => ['?'],
+                    ],
+                ],
+            ],
             'verbs' => [
                 'class' => VerbFilter::className(),
                 'actions' => [
-                    'delete' => ['POST'],
                 ],
             ],
         ];
     }
 
     /**
-     * Lists all Experience models.
-     * @return mixed
-     */
-    public function actionIndex()
-    {
-        $searchModel = new ExperienceSearch();
-        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
-
-        return $this->render('index', [
-            'searchModel' => $searchModel,
-            'dataProvider' => $dataProvider,
-        ]);
-    }
-
-    /**
-     * Displays a single Experience model.
+     * Displays a Lists of Experiences of a User
      * @param integer $id
      * @return mixed
      */
@@ -140,7 +138,8 @@ class ExperiencesController extends Controller
         if (!empty(($models = Experience::find()->where(['user_id' => $id])->limit(20)->all()))) {
             return $models;
         } else {
-            throw new NotFoundHttpException('The requested page does not exist.');
+            //throw new NotFoundHttpException('The requested page does not exist.');
+            return [];
         }
     }
 }

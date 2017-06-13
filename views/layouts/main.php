@@ -149,7 +149,7 @@ AppAsset::register($this);
          <!-- END MINI-PROFILE -->
          <!-- BEGIN SIDEBAR MENU -->
          <ul>
-           <li class="start active "> <a href="#"><i class="material-icons">home</i> <span class="title">Mi Perfil</span> <span class="selected"></span> </a>
+           <li class="start active "> <a href="<?= Url::to(['/profile']) ?>"><i class="material-icons">home</i> <span class="title">Mi Perfil</span> <span class="selected"></span> </a>
            </li>
            <li class="">
              <a href="#"> <i class="material-icons">people outline</i> <span class="title">Directorio</span> <span class=" badge badge-disable pull-right ">203</span>
